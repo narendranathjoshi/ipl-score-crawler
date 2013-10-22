@@ -1,0 +1,4 @@
+Abstract
+========
+
+This is an application which aims to crawl the web and obtain extensive data about various matches played in the Indian Premier League. This application gets the HTML sources of the pre-decided web pages into the local machine and parses the sources to extract data pertaining to cricket matches using string-processing algorithms, patterns and regular expressions. This extracted data is pushed into a local database in a highly normalized fashion on which queries can be performed. 
