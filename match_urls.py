@@ -84,3 +84,12 @@ matchesURL = [match1, match2, match3, match4, match5, match6, match7, match8, ma
              match54, match55, match56, match57, match58, match59, match60, match61, match62, \
              match63, match64, match65, match66, match67, match68, match69, match70, match71, \
              match72, match73, match74, match75, match76]
+
+optionsList = []
+for i in range(len(matchesURL)):
+    start = matchesURL[i].find('6/')
+    end = matchesURL[i].find('_sc')
+    if i == 71:
+        optionsList.append('Match ' + str(i + 1) + ': Washed away due to rain.')
+    else:
+        optionsList.append('Match ' + str(i + 1) + ': ' + matchesURL[i][start + 2:end])

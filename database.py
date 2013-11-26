@@ -18,7 +18,7 @@ def create():
 
 def insert(m, x):
         
-    print('no' + str(m))    
+    #print('no' + str(m))    
     def getVenue():
         venue = ''
         for i in x:
@@ -64,10 +64,10 @@ def insert(m, x):
     def insertRoot():
         insertRootQuery = 'INSERT INTO root VALUES (' + str(m) + ', \'' + getVenue() + '\', \'' + getResult() + '\', \''\
          + getMom() + '\', \'' + getScore() + '\')'
-        #print(insertRootQuery)
+        ##print(insertRootQuery)
         cur.execute(insertRootQuery)
         con.commit()
-        #print("done inserting root", m)
+        #print("commited root", m)
         
     def insertBat():
         index = 0
@@ -96,7 +96,7 @@ def insert(m, x):
                 sixes = bat[i+5]
                 cur.execute('INSERT INTO ' + str(m) + 'BA VALUES (' + str(teamID)+ ',\'' + name + '\', ' + str(runs) + ', ' + str(balls) + ', ' + str(fours) + ',' + str(sixes) + ')')
                 con.commit()
-                print('committed ', m)
+                #print('committed bat', m)
                 
         if len(start) > 1 and len(end) > 1:
             bat = x[start[1] + 1:end[1]]
@@ -121,19 +121,51 @@ def insert(m, x):
                 sixes = bat[i+5]
                 cur.execute('INSERT INTO ' + str(m) + 'BA VALUES (' + str(teamID)+ ',\'' + name + '\', ' + str(runs) + ', ' + str(balls) + ', ' + str(fours) + ',' + str(sixes) + ')')
                 con.commit()
-                print('committed ', m)
+                #print('committed bat', m)
             
     def insertBowl():
         index = 0
         start = [i for i,j in enumerate(x) if 'WD' == j]
         end = [i for i,j in enumerate(x) if '2nd Innings' in j]
-        #print(m, start, end, len(x))
+        ##print(m, start, end, len(x))
         if len(start) != 0 and len(end) != 0:
             bowl = x[start[0] + 1:end[0]]
-            #print(bowl)
+            teamID = 2
+            for i in range(0, len(bowl), 8):
+                name = bowl[i]
+                overs = bowl[i+1]
+                maidens = bowl[i+2]
+                runs = bowl[i+3]
+                wickets = bowl[i+4]
+                try:
+                    cur.execute('INSERT INTO ' + str(m) + 'BO VALUES (' + str(teamID)+ ',\'' + name + '\', ' + str(overs) + ', ' + str(maidens) + ', ' + str(runs) + ',' + str(wickets) + ')')
+                    con.commit()
+                except:
+                    pass
+                #print('committed bowl', m)
+            
+        if len(start) > 1: #and len(end) != 0:
+            bowl = x[start[1] + 1:]
+            teamID = 1
+            for i in range(0, len(bowl), 8):
+                name = bowl[i]
+                overs = bowl[i+1]
+                maidens = bowl[i+2]
+                runs = bowl[i+3]
+                wickets = bowl[i+4]
+                try:
+                    cur.execute('INSERT INTO ' + str(m) + 'BO VALUES (' + str(teamID)+ ',\'' + name + '\', ' + str(overs) + ', ' + str(maidens) + ', ' + str(runs) + ',' + str(wickets) + ')')
+                    con.commit()
+                except:
+                    pass
+                #print('committed bowl', m)
         
         
     
-    insertRoot()
-    insertBat()
+    insertRoot()    #to be uncommented
+    insertBat()    #to be uncommented
     insertBowl()
+    
+def query(queryStatement):
+    cur.execute(queryStatement)
+    return cur
